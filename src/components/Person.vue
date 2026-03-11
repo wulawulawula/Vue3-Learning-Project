@@ -1,29 +1,42 @@
 <template>
   <!-- html -->
   <div class="person">
-    <h2>一辆{{ car.name }}车，价值{{ car.price }}万</h2>
-    <h2>这是toRef显示的车辆名称:{{mz}}</h2>
-    <button @click="changeCar">修改汽车信息</button>
-    <br />
+    <input type="text" v-model="obj.firstName" /><br />
+    <input type="text" v-model="obj.lastName" /><br />
+    <button @click="changeFullName">点击更改名称</button>
+    <h2>姓名:{{ fullName }}</h2>
   </div>
 </template>
 
 <script lang="ts" setup>
-import { reactive,toRefs,toRef } from "vue";
+import { ref, computed } from "vue";
 defineOptions({
   name: "Person",
 });
 // JS //TS
-let car = reactive({
-  name: "奔驰",
-  price: 1000000,
+let obj = ref({
+  firstName: "zhang",
+  lastName: "san",
 });
-let { name, price } = toRefs(car);
-let mz = toRef(car,'name');
-function changeCar() {
-  name.value += "1";
-  price.value += 1;
+function changeFullName() {
+  fullName.value = obj.value.firstName.slice(0,1).toUpperCase() + obj.value.firstName.slice(1) + '-' + obj.value.lastName
 }
+let fullName = computed({
+  get() {
+    return (
+      obj.value.firstName.slice(0, 1).toUpperCase() +
+      obj.value.firstName.slice(1) +
+      "-" +
+      obj.value.lastName
+    );
+  },
+  set(newValue) {
+    const [firstName = '',lastName = ''] = newValue.split('-')
+    obj.value.firstName = firstName
+    obj.value.lastName = lastName
+    console.log('fullName被修改了', newValue);
+  },
+});
 </script>
 
 <style scoped>
