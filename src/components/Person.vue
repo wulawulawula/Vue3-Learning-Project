@@ -10,20 +10,21 @@
 </template>
 
 <script lang="ts" setup>
+import { ref } from 'vue';
 defineOptions({
   name: "Person",
 });
 // JS //TS
-let name = "张三";
-let age = 18;
+let name = ref("张三");
+let age = ref(18);
 let tel = "18300000000";
 
 //方法
 function changeName() {
-  name = "zhang-san";
+  name.value = "zhang-san";
 }
 function changeAge() {
-  age += 1;
+  age.value += 1;
 }
 function showTel() {
   alert(tel);
