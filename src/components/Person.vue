@@ -1,33 +1,41 @@
 <template>
   <!-- html -->
   <div class="person">
-    <h1>姓名:{{ name }}</h1>
-    <h2>年龄:{{ age }}</h2>
-    <button @click="changeName">修改名字</button>
-    <button @click="changeAge">修改年龄</button>
-    <button @click="showTel">查看联系方式</button>
+    <h2>一辆{{ car.name }}车，价值{{ car.price }}万</h2>
+    <button @click="changeCar">修改汽车信息</button>
+    <br />
+    <ul>
+      <li v-for="g in games" :key="g.id">{{ g.name }} - 价格: {{ g.price }}</li>
+    </ul>
+
+    <button @click="changeGames">修改游戏信息</button>
   </div>
 </template>
 
 <script lang="ts" setup>
-import { ref } from 'vue';
+import { reactive } from "vue";
 defineOptions({
   name: "Person",
 });
 // JS //TS
-let name = ref("张三");
-let age = ref(18);
-let tel = "18300000000";
+let car = reactive({
+  name: "奔驰",
+  price: 1000000,
+});
+let games = reactive([
+  { id: "123132123", name: "王者荣耀", price: 0 },
+  { id: "123132124", name: "英雄联盟", price: 1 },
+]);
+function changeCar() {
+  car.name = "宝马";
+  car.price = 800000;
+}
 
-//方法
-function changeName() {
-  name.value = "zhang-san";
-}
-function changeAge() {
-  age.value += 1;
-}
-function showTel() {
-  alert(tel);
+function changeGames() {
+  games[0].name = "和平精英";
+  games[0].price = 0;
+  games[1].name = "英雄联盟手游";
+  games[1].price = 1;
 }
 </script>
 
@@ -37,8 +45,5 @@ function showTel() {
   box-shadow: 0 0 10px;
   border-radius: 2px;
   border-color: #ccc;
-}
-button {
-  margin: 0 5px;
 }
 </style>
