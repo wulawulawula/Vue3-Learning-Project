@@ -10,7 +10,7 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, watch } from "vue";
+import { ref,watchEffect } from "vue";
 defineOptions({
   name: "Person",
 });
@@ -31,10 +31,11 @@ function changePerson() {
     age: 90,
   };
 }
-const stopWath = watch(person, (newVal, oldVal) => {
-  console.log("监听到person对象发生了变化", newVal, oldVal);
-},{
-  deep: true,
+
+watchEffect(() => {
+  if(person.value.age >=25){
+    console.log("监听到person对象发生了变化", person.value.age);
+  }
 });
 </script>
 

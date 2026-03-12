@@ -11,7 +11,7 @@
 </template>
 
 <script lang="ts" setup>
-import { reactive, watch } from "vue";
+import { reactive, watch,watchEffect } from "vue";
 defineOptions({
   name: "Person",
 });
@@ -46,6 +46,12 @@ const stopWath = watch(
     deep: true,
   },
 );
+// watchEffect不需要将监听的对象进行深度监听，watchEffect会自动监听对象内部的属性，并且不需要使用getter进行监听，watchEffect会自动进行依赖收集，当对象内部的属性发生变化时，watchEffect会自动重新执行。
+const stopWatchAge = watchEffect(() => {
+  if(person.age >= 25){
+    console.log("监听到person对象发生了变化", person.age);
+  }
+})
 </script>
 
 <style scoped>
